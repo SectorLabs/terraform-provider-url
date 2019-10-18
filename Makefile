@@ -1,13 +1,16 @@
+provider_name="terraform-provider-url"
+provider_version="0.1"
+
+provider_file_name="$(provider_name)_v$(provider_version)"
+
 build:
-	@go build -o terraform-provider-url
-	@terraform init
+	go build -o $(provider_file_name)
+	chmod +x $(provider_file_name)
 
-install:
-	@go install
+format:
+	go fmt
 
-clean:
-	@rm -rf ./terraform.tfstate
-	@rm -rf ./terraform.tfstate.backup
+run: build
+	./$(provider_file_name)
 
-apply: build
-	@terraform apply -auto-approve
+all: build
